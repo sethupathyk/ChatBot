@@ -3,8 +3,21 @@ import "./styles.css";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ChatBot from "react-simple-chatbot";
+import { ThemeProvider } from "styled-components";
 
-class Review extends React.Component {
+const theme = {
+  background: '#f5f8fb',
+  fontFamily: 'Helvetica Neue',
+  headerBgColor: '#EF6C00',
+  headerFontColor: '#fff',
+  headerFontSize: '15px',
+  botBubbleColor: '#EF6C00',
+  botFontColor: '#fff',
+  userBubbleColor: '#fff',
+  userFontColor: '#4a4a4a',
+};
+
+class Review extends Component {
   constructor(props) {
     super(props);
 
@@ -25,20 +38,20 @@ class Review extends React.Component {
   render() {
     const { name, gender, age } = this.state;
     return (
-      <div style={{ width: "100%"}}>
+      <div style={{ width: "100%" }}>
         <h3>Summary</h3>
         <table>
           <tbody>
             <tr>
-              <td>Name:</td>
+              <td>Name</td>
               <td>{name.value}</td>
             </tr>
             <tr>
-              <td>Gender:</td>
+              <td>Gender</td>
               <td>{gender.value}</td>
             </tr>
             <tr>
-              <td>Age:</td>
+              <td>Age</td>
               <td>{age.value}</td>
             </tr>
           </tbody>
@@ -59,8 +72,8 @@ Review.defaultProps = {
 class SimpleForm extends Component {
   render() {
     return (
-      <ChatBot
-      style={{ width: "100%", backgroundColor: "#ECE5DD"}}
+      <ThemeProvider theme={theme}>
+      <ChatBot style={{ width: "100%", backgroundColor: "#ECE5DD"}}
         steps={[
           {
             id: "1",
@@ -93,7 +106,7 @@ class SimpleForm extends Component {
             id: "age",
             user: true,
             trigger: "7",
-            validator: (value) => {
+            validator: value => {
               if (isNaN(value)) {
                 return "value must be a number";
               } else if (value < 0) {
@@ -107,7 +120,7 @@ class SimpleForm extends Component {
           },
           {
             id: "7",
-            message: "Thanks for answering! Check out your summary below",
+            message: "Great! Check out your summary",
             trigger: "review"
           },
           {
@@ -163,6 +176,7 @@ class SimpleForm extends Component {
           }
         ]}
       />
+      </ThemeProvider>
     );
   }
 }
